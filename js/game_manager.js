@@ -1,5 +1,5 @@
 function GameManager(size, InputManager, Actuator, ScoreManager) {
-  this.size         = size; // Size of the grid
+  this.size         = { 'x': 6, 'y': 9 }; // Size of the grid
   this.inputManager = new InputManager;
   this.scoreManager = new ScoreManager;
   this.actuator     = new Actuator;
@@ -166,7 +166,7 @@ GameManager.prototype.move = function (direction) {
 
         // Only one merger per row traversal?
         if (next && next.value === tile.value && !next.mergedFrom) {
-          var merged = new Tile(positions.next, tile.value * 2);
+          var merged = new Tile(positions.next, tile.value + 1);
           merged.mergedFrom = [tile, next];
 
           self.grid.insertTile(merged);
@@ -178,8 +178,8 @@ GameManager.prototype.move = function (direction) {
           // Update the score
           self.score += merged.value;
 
-          // The mighty 2048 tile
-          if (merged.value === 18446744073709551616) self.won = true;
+          // The mighty 25 tile
+          if (merged.value === 25) self.won = true;
         } else {
           self.moveTile(tile, positions.farthest);
         }
